@@ -1,0 +1,119 @@
+/* color pallete
+coffee pot - #67595E
+lighter coffee pot - #A49393
+dusty rose - #EED6D3
+rosewater - #E8B4B8
+https://www.canva.com/colors/color-palettes/rosy-flamingo/
+*/
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  background: #67595E;
+  color: #EED6D3;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #EED6D3;
+}
+
+.currentPage {
+  background: #67595E;
+  border-radius: 5px;
+}
+
+.gridPic {
+  height: 100px;
+  width: 100px;
+  padding: 10px;
+  border: 1px #E8B4B8 solid;
+  border-radius: 50%;
+}
+
+.animalProfile {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+}
+
+#navbar {
+  background: #000;
+  height: 6vh;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+#navbar ul {
+  display: inline-flex;
+}
+
+#navbar ul li a {
+  padding : 0 15px;
+}
+
+#mainContent {
+  margin: auto;
+  max-width: 970px;
+}
+
+#welcomeBanner {
+  background: url("https://img.freepik.com/free-photo/white-coffee-cup-roasted-coffee-beans-around_35570-794.jpg?size=626&ext=jpg") no-repeat center;
+  background-size: 100vh;
+  height: 47vh;
+}
+
+#welcomeLogo {
+  font-size: 2.7em;
+  color: #E8B4B8;
+}
+
+#welcomeContent {
+  padding: 10px;
+  margin: auto;
+  height: 47vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+#welomeParagraph {
+  padding: 30px;
+  background: #EED6D3;;
+  color: #000;
+  border-radius: 1px black solid;
+}
+
+#welcomeGrid {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+/* Pets */
+
+#animalShowcase {
+  display: flex;
+}
+
+#animalLineUp {
+  display: flex;
+}
+
+.card {
+  width: auto;
+  border: black 1px solid;
+}
