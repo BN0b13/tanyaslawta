@@ -6,6 +6,7 @@ require('dotenv/config');
 const express = require('express');
 const mongodb = require('mongodb');
 const mongoose = require('mongoose');
+const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const helmet = require('helmet');

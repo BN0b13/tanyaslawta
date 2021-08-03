@@ -28,7 +28,7 @@ async function loadBlogs() {
               </div>
               <h2 class="card-title">${post.title}</h2>
               <p class="card-text">${post.description}</p>
-              <p class="card-text">${post.date}</p>
+              <p class="card-text">${new Date(post.date).toDateString()}</p>
             </div>
           </div>
         </div>

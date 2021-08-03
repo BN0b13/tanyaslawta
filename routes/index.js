@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const session = requires('express-session');
 const router = express.Router();
 const Post = require('../models/Post');
 const User = require('../models/User');
@@ -47,6 +48,10 @@ router.post('/blog-post', async (req, res) => {
 });
 
 router.post('/userCreate', async (req, res) => {
+  const existingUser = await User.find( { 'user': req.body.user } );
+  if(existingUser.length <= 0) {
+    return console.log('User already exists');
+  }
   // console.log(post);
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -62,10 +67,21 @@ router.post('/userCreate', async (req, res) => {
   };
 });
 
-router.post('/userAuth', (req, res) => {
-  // const userName = await User.find( { 'user': req.body.user } );
-  // console.log(req.body.user);  
-  // console.log(userName); 
+router.post('/userAuth', async (req, res) => {
+  const userName = await User.find( { 'user': req.body.user } );
+
+  console.log(userName);
+  if(userName.length <= 0) {
+    console.log('user not found');
+  } else {
+    const match = await bcrypt.compare(req.body.password, userName[0].password);
+
+    if(match) {
+        console.log('success!');
+    } else {
+      console.log('failed');
+    }
+  }
   
   // if (user == null) {
   //   return res.status(400).send('Cannot find user')
@@ -79,7 +95,6 @@ router.post('/userAuth', (req, res) => {
   // } catch {
   //   res.status(500).send();
   // }
-  console.log('Login hit, does not work yet');
 
   res.redirect('/');
 })
@@ -108,3 +123,9 @@ router.get('/about', (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
+
