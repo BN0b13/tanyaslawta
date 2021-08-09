@@ -10,90 +10,63 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Tanya's Place</a>
+        <a class="navbar-brand" href="/">Tanya's Place</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/blogs">Blog</a>
+              <a class="nav-link" href="/explore">Explore</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
+              <a class="nav-link" href="/logout">Log Out</a>
             </li>
           </ul>
         </div>
       </div>
     </nav>
 
-  <section class="d-flex justify-content-center text-center">
-    <div class="container-sm m-3">
-      <div class="card">
-        <div class="row">
-          <div class="col d-none d-md-block">
-            <img src="../img/welcome_bg.jpg" class="img-fluid" alt="Welcome">
-          </div>
-          <div class="col">
-            <div class="card-title">
-              <h2>Please Sign In</h2>
-            </div>
-            <div class="card-body">
-              <form action="/userAuth" method="post" autocomplete="off">
-                <div class="m-3">
-                  <label for="user" class="form-label">User Name</label>
-                  <input type="text" name="user" class="form-control" required>
+    <section class="text-center">
+      <div class="container row">
+        <div id="profileNav" class="container col">
+          <div id="profileHead" class="container"></div>
+          <div class="container">
+            <!-- modal -->
+            <button class="btn btn-primary btn-sm m-3" data-bs-toggle="modal" data-bs-target="#newBlogPost">New Blog Post</button>
+            <div class="modal fade" id="newBlogPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                    <div class="modal-body">
+                      <form action="/new-post" id="myForm" method="post">
+                        <label for="title" class="form-label">Title</label><br>
+                        <input type="text" id="title" class="form-control" name="title" autocomplete="off" autocapitalize="on" required><br>
+                        <label for="body" class="form-label">Body</label><br>
+                        <textarea id="body" class="form-control" name="body" cols="30" rows="10" required></textarea><br>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="submitBtn" class="btn btn-primary m-2">Submit<span id="editBtnArea"></span></button>
+                      </form>
+                    </div>
+                  </div>
                 </div>
-                <div class="m-3">
-                  <label for="password" class="form-label">Password</label>
-                  <input type="password" name="password" class="form-control" required>
-                </div>
-                <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#createUser">Sign Up</button>
-                <button type="submit" class="btn btn-primary m-1">Sign In</button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="createUser" tabindex="-1" aria-labelledby="createUser" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New User</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form action="/userCreate" method="post" autocomplete="off">
-              <div class="m-3">
-                <label for="user" class="form-label">User Name</label>
-                <input type="text" name="user" class="form-control" required>
-              </div>
-              <div class="m-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" required>
-              </div>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-              <button type="submit" class="btn btn-primary">Create Account</button>
-            </form>
-          </div>
+        <div id="profileContent" class="container col">
         </div>
       </div>
-    </div>
-  </section>
-
-  <section class="text-center">
-    <footer class="m-3 p-3">
-      <p>Copyright 2021</p>
-    </footer>
-  </section>
-
-
+      
+    </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  <script src="../js/profile.js"></script>
 </body>
 </html>
