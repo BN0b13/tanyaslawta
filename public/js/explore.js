@@ -4,10 +4,11 @@ const postBody = document.getElementById('body');
 const submitBtn = document.getElementById('submitBtn');
 const blogArr = document.getElementById('currentBlogs');
 const editBtnArea = document.getElementById('editBtnArea');
+const logOutBtn = document.getElementById('logOutBtn');
 
 // load post previews
-async function loadAllPosts() {
-  const results = await fetch('/posts/api')
+function loadAllPosts() {
+  const results = fetch('/posts/api')
   .then(response=> response.json())
   .then(data=> {
     let output = '';
@@ -34,9 +35,9 @@ async function loadAllPosts() {
   .catch(err=> console.log(err));
 }
 
-async function loadContent() {
+function loadContent() {
   const postID = window.location.pathname;
-  const results = await fetch('/posts/api')
+  const results = fetch('/posts/api')
   .then(response=> response.json())
   .then(data=> {
     let pageContent = '';
@@ -65,7 +66,21 @@ async function loadContent() {
   .catch(err=> console.log(err));
 }
 
+function checkUserStatus() {
+  const userRes = fetch('/profile-user/api')
+  .then(response=> response.json())
+  .then(data=> {
+    console.log('checkUserStatus hit')
+    if(data.length >= 1) {
+      logOutBtn.innerHTML = '<a class="nav-link" href="/logout">Log Out</a>';
+    }
+  })
+  .catch(err=> console.log(err));
+  
+}
+
 function loadUp() {
+  checkUserStatus();
   loadAllPosts();
   loadContent();
 }

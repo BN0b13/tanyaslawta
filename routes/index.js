@@ -6,36 +6,25 @@ const Post = require('../models/Post');
 const User = require('../models/User');
 
 const seshCheck = (req, res, next) => {
-  console.log('hit seshCheck');
-  const isLoggedIn = req.session.isLoggedIn ? req.session.isLoggedIn : false;
-  // if( req.session && !isLoggedIn) {
-  if(!isLoggedIn) {
-    //  return res.redirect('/');
-    console.log('session not logged in')
-  } 
-    next();
-  
-}
-router.get('/', seshCheck, (req, res) => {
   if(!req.session.isLoggedIn){
-    res.redirect(`/login`);
+    return res.redirect(`/login`);
   }
+  // const isLoggedIn = req.session.isLoggedIn ? req.session.isLoggedIn : false;
+  // if( req.session && !isLoggedIn) {
+  //   res.redirect('/');
+  // } 
+  next();
+}
+
+router.get('/', seshCheck, (req, res) => {
   const homepage = (path.join(process.cwd(), '/public/html/index.html'));
   res.sendFile(homepage);
 });
 
-// router.get('/:postId', seshCheck, (req, res) => {
-//   if(!req.session.isLoggedIn){
-//     res.redirect(`/login`);
-//   }
-//   const homepage = (path.join(process.cwd(), '/public/html/index.html'));
-//   res.sendFile(homepage);
-// });
-
 router.get('/login', (req, res) => {
-  // if(req.session.isLoggedIn){
-  //   res.redirect(`/`);
-  // }
+  if(req.session.isLoggedIn){
+    return res.redirect(`/`);
+  }
   const loginPage = (path.join(process.cwd(), '/public/html/login.html'));
   res.sendFile(loginPage);
 });
@@ -53,9 +42,6 @@ router.get('/explore', (req, res) => {
 router.get('/content/:postId', async (req, res) => {
   const contentPage = (path.join(process.cwd(), '/public/html/content.html'));
   res.sendFile(contentPage);
-   // if(req.session.userID == req.params.postId) {
-    // console.log('match!');
-  // }
 });
 
 router.get('/profile/api', (req, res) => {
@@ -88,16 +74,6 @@ router.get('/posts/api', (req, res) => {
   });
 });
 
-router.get('/users/api', (req, res) => {
-  User.find()
-  .then(result=> {
-    res.send(result);
-  })
-  .catch(error=> {
-    res.send(error);
-  });
-});
-
 router.post('/new-post', async (req, res) => {
   const { title, body } = req.body;
   const userID = req.session.userID;
@@ -119,17 +95,16 @@ router.post('/new-post', async (req, res) => {
 
 router.post('/userCreate', async (req, res) => {
   const existingUser = await User.find( { 'user': req.body.user } );
-  // if(existingUser.length <= 0) {
-  //   return console.log('User already exists');
-  // }
-  // console.log(post);
+  
+  if(existingUser.length >=1) {
+    return res.redirect('/login');
+  }
+
   try {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const user = req.body.user;
     const post = new User({
-    user: user,
+    user: req.body.user,
     password: hashedPassword,
-    dob: req.body.dob,
     email: req.body.email
   });
     const savePost = await post.save();
@@ -143,7 +118,7 @@ router.post('/userAuth', async (req, res) => {
   const userName = await User.find( { 'user': req.body.user } );
 
   if(userName.length <= 0) {
-    console.log('user not found');
+    return res.redirect('/login');
   } else {
     const match = await bcrypt.compare(req.body.password, userName[0].password);
 
@@ -152,8 +127,6 @@ router.post('/userAuth', async (req, res) => {
       req.session.user = userName[0].user;
       req.session.isLoggedIn = true;
       req.session.cookie.maxAge = 24 * 60 * 60 * 1000;
-      console.log(req.session);
-
     } else {
       console.log('failed');
     }
@@ -161,8 +134,6 @@ router.post('/userAuth', async (req, res) => {
   }
   profileUser = req.session.userID;
   req.session.save();
-
-  // res.redirect(`/` + profileUser);
   res.redirect(`/`);
 })
 

@@ -50,13 +50,13 @@ function profileControlls() {
 }
 
 function clearFields() {
-  postTitle.value = '';
-  postBody.value = '';
+    postTitle.value = '';
+    postBody.value = '';
   modalBtnArea.innerHTML = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="submit" id="submitBtn" class="btn btn-primary m-2">Submit</button>';
 }
 
-async function loadContent() {
-  const results = await fetch('/profile/api')
+function loadContent() {
+  const results = fetch('/profile/api')
   .then(response=> response.json())
   .then(data=> {
     let pageContent = '';
@@ -87,8 +87,8 @@ async function loadContent() {
   .catch(err=> console.log(err));
 }
 
-async function loadUser() {
-  const results = await fetch('/profile-user/api')
+function loadUser() {
+  const results = fetch('/profile-user/api')
   .then(response=> response.json())
   .then(data=> {
     let output = '';
@@ -103,7 +103,7 @@ async function loadUser() {
 }
 
 function loadUp() {
-  clearFields();
+  clearFields()
   loadUser();
   loadContent();
   profileControlls();

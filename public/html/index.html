@@ -5,35 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- <link rel="stylesheet" href="../css/style.css"> -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <title>Tanya's Place | Welcome</title>
+  <title>Tanya's Place | Profile</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">Tanya's Place</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/explore">Explore</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/logout">Log Out</a>
-            </li>
-          </ul>
-        </div>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Tanya's Place</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/explore">Explore</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Log Out</a>
+          </li>
+        </ul>
       </div>
-    </nav>
+    </div>
+  </nav>
 
-    <section class="text-center">
-      <div class="container row">
-        <div id="profileNav" class="container col">
-          <div id="profileHead" class="container"></div>
+  <section>
+    <div class="container text-center">
+      <div class="row">
+        <div id="profileNav" class="col">
+          <div id="profileHead"></div>
           <div class="container">
             <!-- modal -->
             <button class="btn btn-primary btn-sm m-3" data-bs-toggle="modal" data-bs-target="#newBlogPost">New Blog Post</button>
@@ -44,28 +45,26 @@
                     <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                    <div class="modal-body">
-                      <form action="/new-post" id="myForm" method="post">
-                        <label for="title" class="form-label">Title</label><br>
-                        <input type="text" id="title" class="form-control" name="title" autocomplete="off" autocapitalize="on" required><br>
-                        <label for="body" class="form-label">Body</label><br>
-                        <textarea id="body" class="form-control" name="body" cols="30" rows="10" required></textarea><br>
-                        <div id="modalBtnArea">
-                          
-                        </div>
-                      </form>
-                    </div>
+                  <div class="modal-body">
+                    <form action="/new-post" id="myForm" method="post">
+                      <label for="title" class="form-label">Title</label><br>
+                      <input type="text" id="title" class="form-control" name="title" autocomplete="off" autocapitalize="on" required><br>
+                      <label for="body" class="form-label">Body</label><br>
+                      <textarea id="body" class="form-control" name="body" cols="30" rows="10" required></textarea><br>
+                      <div id="modalBtnArea"></div>
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div id="profileContent" class="container col">
+        <div class="col">
+          <div id="profileContent"></div>
         </div>
       </div>
-      
-    </section>
+    </div>
+  </section>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="../js/profile.js"></script>
