@@ -42,11 +42,11 @@
               <form action="/userAuth" method="post" autocomplete="off">
                 <div class="m-3">
                   <label for="user" class="form-label">User Name</label>
-                  <input type="text" name="user" class="form-control" required>
+                  <input type="text" name="user" class="form-control" autocomplete="off" required>
                 </div>
                 <div class="m-3">
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" name="password" class="form-control" required>
+                  <input type="password" name="password" class="form-control" autocomplete="off" required>
                 </div>
                 <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#createUser">Sign Up</button>
                 <button type="submit" class="btn btn-primary m-1">Sign In</button>
@@ -68,15 +68,15 @@
             <form action="/userCreate" method="post" autocomplete="off">
               <div class="m-3">
                 <label for="user" class="form-label">User Name</label>
-                <input type="text" name="user" class="form-control" required>
+                <input type="text" name="user" class="form-control" autocomplete="off" required>
               </div>
               <div class="m-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" required>
+                <input type="password" name="password" class="form-control" autocomplete="off" required>
               </div>
               <div class="m-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" required>
+                <input type="email" name="email" class="form-control" autocomplete="off" required>
               </div>
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
               <button type="submit" class="btn btn-primary">Create Account</button>
