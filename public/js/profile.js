@@ -56,12 +56,39 @@ deletePost = (postidentification) => {
   }).then(response=> response.json())
   .then(data => {
     console.log(data);
-    location.reload();
-    return;
+    loadContent();
   });
 }
 
-console.log(JSON.stringify(deleteBtn));
+editPost = async  (postidentification) => {
+  const post = await fetch(`/posts/${postidentification}`)
+  .then(response=> response.json())
+  .then(data=> {
+    postTitle.value = data[0].title;
+    postBody.value = data[0].body;
+    modalBtnArea.innerHTML = `
+      <button onClick="clearFields()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+      <button onClick="submitEdit('${data[0]._id}')" type="button" class="btn btn-primary m-2" data-bs-dismiss="modal">Edit Post</button>
+    `;})
+  .catch(err=> console.log(err));
+}
+
+submitEdit = (data) => {
+  console.log(data);
+  fetch(`/${data}`, {
+    method: 'PATCH',
+    headers: { 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+     },
+    body: JSON.stringify( {
+      'title': postTitle.value,
+      'body': postBody.value   
+    })})
+  .then((response) => response.json())
+  .then((data) => {console.log(data);});
+  loadContent();
+}
 
 // .click((e) => {
 //   console.log('hit');
@@ -69,9 +96,12 @@ console.log(JSON.stringify(deleteBtn));
 // })
 
 function clearFields() {
-    postTitle.value = '';
-    postBody.value = '';
-  modalBtnArea.innerHTML = '<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="submit" id="submitBtn" class="btn btn-primary m-2">Submit</button>';
+  postTitle.value = '';
+  postBody.value = '';
+  modalBtnArea.innerHTML = `
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+    <button type="submit" id="submitBtn" class="btn btn-primary m-2">Submit</button>
+  `;
 }
 
 function loadContent() {
@@ -88,8 +118,8 @@ function loadContent() {
                 <div class="dropdown">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Manage</button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><button onClick="editPost('${post._id}')" postid="${post._id}" class="editBtn btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#newBlogPost">Edit</button></li>
-                    <li><button onClick="deletePost('${post._id}')" postid="${post._id}" type="button" class="deleteBtn btn btn-danger btn-sm">Delete</button></li>
+                    <li><button onClick="editPost('${post._id}')" class="editBtn btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#newBlogPost">Edit</button></li>
+                    <li><button onClick="deletePost('${post._id}')" type="button" class="deleteBtn btn btn-danger btn-sm">Delete</button></li>
                   </ul>
                 </div>
               </div>

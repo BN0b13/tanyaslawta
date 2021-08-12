@@ -76,6 +76,16 @@ router.get('/posts/api', (req, res) => {
   });
 });
 
+router.get('/posts/:postId', (req, res) => {
+  Post.find( { _id: req.params.postId } )
+  .then(result=> {
+    res.send(result);
+  })
+  .catch(error=> {
+    res.send(error);
+  });
+});
+
 router.get('/comments/:postId', (req, res) => {
   Comment.find( { postID: req.params.postId } )
   .then(result=> {
