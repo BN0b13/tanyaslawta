@@ -5,49 +5,68 @@ const modalBtnArea = document.getElementById('modalBtnArea');
 const profileContent = document.getElementById('profileContent');
 const editBtnArea = document.getElementById('editBtnArea');
 const logOutBtn = document.getElementById('logOutBtn');
+const deleteBtn = document.getElementsByClassName('deleteBtn');
 
-function profileControlls() {
-  profileContent.addEventListener('click', (e) => {    
-    const targ = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+// function profileControlls() {
+//   profileContent.addEventListener('click', (e) => {    
+//     const targ = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id;
 
-      if(e.target.className == 'deleteBtn btn btn-danger btn-sm') {
-        fetch(`/${targ}`, {
-          method: 'DELETE'
-        }).then(response=> response.json())
-        .then(data => {
-          return loadUp();
-        });
-      } else if(e.target.className == 'editBtn btn btn-secondary btn-sm') {
-        const titleContent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[1].textContent;
-        const bodyContent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[2].textContent;
-        postTitle.value = titleContent;
-        postBody.value = bodyContent;
-        modalBtnArea.innerHTML = '<button type="button" id="postCancelBtn" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" id="submitEdit" class="btn btn-primary m-2" data-bs-dismiss="modal">Edit Post</button>';
-        document.getElementById('postCancelBtn').addEventListener('click', () => {
-          clearFields();
-        })
-        document.getElementById('submitEdit').addEventListener('click', function() {
-          const title = postTitle.value;
-          const body = postBody.value;
-          const data = { title, body};
+//       if(e.target.className == 'deleteBtn btn btn-danger btn-sm') {
+//         fetch(`/${targ}`, {
+//           method: 'DELETE'
+//         }).then(response=> response.json())
+//         .then(data => {
+//           return loadUp();
+//         });
+//       } else if(e.target.className == 'editBtn btn btn-secondary btn-sm') {
+//         const titleContent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[1].textContent;
+//         const bodyContent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[2].textContent;
+//         postTitle.value = titleContent;
+//         postBody.value = bodyContent;
+//         modalBtnArea.innerHTML = '<button type="button" id="postCancelBtn" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" id="submitEdit" class="btn btn-primary m-2" data-bs-dismiss="modal">Edit Post</button>';
+//         document.getElementById('postCancelBtn').addEventListener('click', () => {
+//           clearFields();
+//         })
+//         document.getElementById('submitEdit').addEventListener('click', function() {
+//           const title = postTitle.value;
+//           const body = postBody.value;
+//           const data = { title, body};
   
-          fetch(`/${targ}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify(data)
+//           fetch(`/${targ}`, {
+//           method: 'PATCH',
+//           headers: {
+//             'Content-type': 'application/json'
+//           },
+//           body: JSON.stringify(data)
           
-        }).then(response=> response.json())
-        .then(data => {
-          return loadContent();
-        })
-        });
-      } else { return }
+//         }).then(response=> response.json())
+//         .then(data => {
+//           return loadContent();
+//         })
+//         });
+//       } else { return }
 
-    e.preventDefault();
+//     e.preventDefault();
+//   });
+// }
+
+deletePost = (postidentification) => {
+    fetch(`/${postidentification}`, {
+    method: 'DELETE'
+  }).then(response=> response.json())
+  .then(data => {
+    console.log(data);
+    location.reload();
+    return;
   });
 }
+
+console.log(JSON.stringify(deleteBtn));
+
+// .click((e) => {
+//   console.log('hit');
+//   console.log(e);
+// })
 
 function clearFields() {
     postTitle.value = '';
@@ -69,8 +88,8 @@ function loadContent() {
                 <div class="dropdown">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">Manage</button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><button class="editBtn btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#newBlogPost">Edit</button></li>
-                    <li><button type="button" class="deleteBtn btn btn-danger btn-sm">Delete</button></li>
+                    <li><button onClick="editPost('${post._id}')" postid="${post._id}" class="editBtn btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#newBlogPost">Edit</button></li>
+                    <li><button onClick="deletePost('${post._id}')" postid="${post._id}" type="button" class="deleteBtn btn btn-danger btn-sm">Delete</button></li>
                   </ul>
                 </div>
               </div>
@@ -106,5 +125,5 @@ function loadUp() {
   clearFields()
   loadUser();
   loadContent();
-  profileControlls();
+  // profileControlls();
 }

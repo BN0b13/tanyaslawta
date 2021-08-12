@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
 
-const UserSchema = mongoose.Schema({
+const CommentSchema = mongoose.Schema({
+  userID: {
+    type: String,
+    required: true
+  },
   user: {
     type: String,
     required: true
   },
-  password: {
-    type: String,
-    required: true
-  },
-  email: {
+  comment: {
     type: String,
     required: true
   },
@@ -18,17 +18,13 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  isAdmin: {
-    type: Boolean,
+  postID: {
+    type: String,
     required: true
-  },
-  isLoggedIn: {
-    type: Boolean,
-    required: false
   }
 });
 
 
 
 // first parameter is folder name in DB Collection, second is const/function called
-module.exports = mongoose.model('users', UserSchema);
+module.exports = mongoose.model('comments', CommentSchema);

@@ -22,7 +22,7 @@ const PostSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  comments: {
+  category: {
     type: String,
     required: false
   }
