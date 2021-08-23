@@ -4,7 +4,6 @@
 //better way to call dotenv, Globally
 require('dotenv/config');
 const express = require('express');
-const mongodb = require('mongodb');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -14,7 +13,7 @@ const helmet = require('helmet');
 const app = express();
 
 // app.set('view engine, html')
-app.use(express.static(__dirname +'/public'))
+app.use(express.static(__dirname +'/public'));
 app.use(cookieParser());
 mongoose.connect(process.env.CONNECTIONSTRING, { 
   useNewUrlParser: true,
@@ -24,9 +23,8 @@ mongoose.connect(process.env.CONNECTIONSTRING, {
   }).then(() => {
     console.log('DB Connected');
   }).catch(err=>{
-    return
+    return console.log(err);
 });
-const db = mongoose.connection;
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,

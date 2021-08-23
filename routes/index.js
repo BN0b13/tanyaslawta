@@ -17,6 +17,15 @@ const seshCheck = (req, res, next) => {
   next();
 }
 
+const userExists = async (user) => {
+  const userName = await User.find( { 'user': user } );
+  const exists = userName.length <= 0 ? false : true;
+
+  const data = { exists: exists, user: userName}
+  
+  return data;
+}
+
 router.get('/', seshCheck, (req, res) => {
   const homepage = (path.join(process.cwd(), '/public/html/index.html'));
   res.sendFile(homepage);
@@ -31,7 +40,6 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/logout', async (req, res) => {
-  await User.updateOne({_id: req.session.userID }, { $set: {isLoggedIn: false}});
   req.session.destroy((err) => {err});
   res.redirect(`/login`);
 });
@@ -45,6 +53,11 @@ router.get('/content/:postId', seshCheck, async (req, res) => {
   const contentPage = (path.join(process.cwd(), '/public/html/content.html'));
   res.sendFile(contentPage);
 });
+
+// router.get('/test', (req, res) => {
+//   console.log(req);
+//   res.json( { message: 'this works' });
+// })
 
 router.get('/profile/api', (req, res) => {
   Post.find( {userID: req.session.userID} )
@@ -147,8 +160,8 @@ router.post('/comment-post', (req, res) => {
 router.post('/userCreate', async (req, res) => {
   const existingUser = await User.find( { user: req.body.user } );
   
-  if(existingUser.length >=1) {
-    return res.redirect('/login');
+  if(existingUser.length >=4) {
+    return res.json( { message: 'Please select a username longer than 5 characters' });
   }
 
   try {
@@ -162,7 +175,6 @@ router.post('/userCreate', async (req, res) => {
   });
     const savePost = await post.save();
     const userName = await User.find( { user: req.body.user } );
-    await User.updateOne({_id: userName[0]._id }, { $set: {isLoggedIn: true}});
     req.session.userID = userName[0]._id;
     req.session.user = userName[0].user;
     req.session.isLoggedIn = true;
@@ -173,32 +185,61 @@ router.post('/userCreate', async (req, res) => {
   };
 });
 
-router.post('/userAuth', async (req, res) => {
-  const userName = await User.find( { 'user': req.body.user } );
+router.post('/test/login', async (req, res) => {
+  const userData = await userExists(req.body.user);
+  let statusRes = '';
 
-  if(userName.length <= 0) {
+  if(!userData.exists) {
     // user does not exist
-    return res.redirect('/login');
-  } else if(userName[0].isLoggedIn) {
-    //user already signed in elsewhere
-    return res.redirect('/login');
+    // const noUser = JSON.stringify( { message: 'User Does Not Exist' } );
+    // res.send(noUser);
+    statusRes = 404;
   } else {
-    const match = await bcrypt.compare(req.body.password, userName[0].password);
+    const match = await bcrypt.compare(req.body.password, userData.user[0].password);
 
     if(match) {
-      await User.updateOne({_id: userName[0]._id }, { $set: {isLoggedIn: true}});
-      req.session.userID = userName[0]._id;
-      req.session.user = userName[0].user;
+      req.session.userID = userData.user[0]._id;
+      req.session.user = userData.user[0].user;
       req.session.isLoggedIn = true;
       req.session.cookie.maxAge = 24 * 60 * 60 * 1000;
+      req.session.save();
+      // res.send('Success');
+      statusRes = 200;
     } else {
-      return res.redirect('/login');
+      // const passwordIncorrect = JSON.stringify( { message: 'Password Incorrect' } );
+      // res.send(passwordIncorrect);
+      statusRes = 401;
     }
   }
-  profileUser = req.session.userID;
-  req.session.save();
-  res.redirect(`/`);
+  res.sendStatus(statusRes);
 })
+
+// router.post('/userAuth', async (req, res) => {
+//   const userName = await User.find( { 'user': req.body.user } );
+
+//   if(userName.length <= 0) {
+//     // user does not exist
+//     return res.json( { message: 'Username Does Not Exist' });
+//   } else if(userName[0].isLoggedIn) {
+//     //user already signed in elsewhere
+//     return res.json( { message: 'Username Is Already Logged In' });
+//   } else {
+//     const match = await bcrypt.compare(req.body.password, userName[0].password);
+
+//     if(match) {
+//       await User.updateOne({_id: userName[0]._id }, { $set: {isLoggedIn: true}});
+//       req.session.userID = userName[0]._id;
+//       req.session.user = userName[0].user;
+//       req.session.isLoggedIn = true;
+//       req.session.cookie.maxAge = 24 * 60 * 60 * 1000;
+//     } else {
+//       return res.json( { message: 'Password Does Not Match' });
+//     }
+//   }
+//   profileUser = req.session.userID;
+//   req.session.save();
+//   res.redirect(`/`);
+// })
 
 router.delete('/:postId', async (req, res) => {
   try {

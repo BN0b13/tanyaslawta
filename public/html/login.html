@@ -19,9 +19,6 @@
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/explore">Explore</a>
-            </li>
           </ul>
         </div>
       </div>
@@ -36,25 +33,52 @@
           </div>
           <div class="col">
             <div class="card-title">
+              <div id="loginTitle" class="h2 m-3 p-2">Please Sign In</div>
+            </div>
+            <div class="card-body">
+                <div class="m-3">
+                  <label for="user" class="form-label">User Name</label>
+                  <input type="text" name="user" id="loginUser" class="form-control" required>
+                </div>
+                <div class="m-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" name="password" id="loginPassword" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#createUser">Sign Up</button>
+                <button type="submit" id="loginSubmit" class="btn btn-primary m-1">Sign In</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- <div class="container-sm m-3">
+      <div class="card">
+        <div class="row">
+          <div class="col d-none d-md-block">
+            <img src="../img/welcome_bg.jpg" class="img-fluid" alt="Welcome">
+          </div>
+          <div class="col">
+            <div class="card-title">
               <div id="loginTitle" class="h2">Please Sign In</div>
             </div>
             <div class="card-body">
               <form action="/userAuth" method="post" autocomplete="off">
                 <div class="m-3">
                   <label for="user" class="form-label">User Name</label>
-                  <input type="text" name="user" class="form-control" required>
+                  <input type="text" name="user" id="loginUser" class="form-control" required>
                 </div>
                 <div class="m-3">
                   <label for="password" class="form-label">Password</label>
-                  <input type="password" name="password" class="form-control" required>
+                  <input type="password" name="password" id="loginPassword" class="form-control" required>
                 </div>
                 <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#createUser">Sign Up</button>
-                <button type="submit" class="btn btn-primary m-1">Sign In</button>
+                <button type="submit" id="loginSubmit" class="btn btn-primary m-1">Sign In</button>
               </form>
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
     <!-- Modal -->
     <div class="modal fade" id="createUser" tabindex="-1" aria-labelledby="createUser" aria-hidden="true">

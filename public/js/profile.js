@@ -157,3 +157,16 @@ function loadUp() {
   loadContent();
   // profileControlls();
 }
+
+// function testRes() {
+//   fetch('/test')
+//   .then(response=> response.json())
+//   .then(data=> {
+//     console.log(data);
+//     // let output = '';
+//     // data.forEach(res => {
+//     //   output += `
+//     //     <div>${res}</div>
+//     //   `
+//     })
+// }
