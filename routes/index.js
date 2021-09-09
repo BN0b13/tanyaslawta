@@ -54,12 +54,17 @@ router.get('/content/:postId', seshCheck, async (req, res) => {
   res.sendFile(contentPage);
 });
 
-// router.get('/test', (req, res) => {
-//   console.log(req);
-//   res.json( { message: 'this works' });
-// })
+router.get('/profile/user/api', (req, res) => {
+  User.find( {_id: req.session.userID} )
+  .then(result=> {
+    res.send(result);
+  })
+  .catch(error=> {
+    res.send(error);
+  });
+});
 
-router.get('/profile/api', (req, res) => {
+router.get('/profile/posts/api', (req, res) => {
   Post.find( {userID: req.session.userID} )
   .then(result=> {
     res.send(result);
@@ -69,8 +74,8 @@ router.get('/profile/api', (req, res) => {
   });
 });
 
-router.get('/profile-user/api', (req, res) => {
-  User.find( { _id: req.session.userID } )
+router.get('/profile/comments/api', (req, res) => {
+  Comment.find( {userID: req.session.userID} )
   .then(result=> {
     res.send(result);
   })
@@ -101,6 +106,16 @@ router.get('/posts/:postId', (req, res) => {
 
 router.get('/comments/:postId', (req, res) => {
   Comment.find( { postID: req.params.postId } )
+  .then(result=> {
+    res.send(result);
+  })
+  .catch(error=> {
+    res.send(error);
+  });
+});
+
+router.get('/comments/:userId', (req, res) => {
+  Comment.find( { userID: req.params.userId } )
   .then(result=> {
     res.send(result);
   })

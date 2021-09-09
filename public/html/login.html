@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" href="../css/style.css"> -->
+  <link rel="stylesheet" href="../css/style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <title>Tanya's Place | Sign In</title>
 </head>
@@ -25,13 +25,13 @@
     </nav>
 
   <section class="d-flex justify-content-center text-center">
-    <div class="container-sm m-3">
+    <div id="loginContainer" class="container-sm m-3">
       <div class="card">
-        <div class="row">
-          <div class="col d-none d-md-block">
-            <img src="../img/welcome_bg.jpg" class="img-fluid" alt="Welcome" style="max-height: 80vh;">
-          </div>
-          <div class="col">
+      <div class="row">
+        <div class="col d-none d-md-block">
+          <img src="../img/welcome_bg.jpg" id="loginPic" class="img-fluid" alt="Welcome">
+        </div>
+        <div class="col">
             <div class="card-title">
               <div id="loginTitle" class="h2 m-3 p-2">Please Sign In</div>
             </div>
@@ -50,35 +50,6 @@
           </div>
         </div>
       </div>
-
-
-    <!-- <div class="container-sm m-3">
-      <div class="card">
-        <div class="row">
-          <div class="col d-none d-md-block">
-            <img src="../img/welcome_bg.jpg" class="img-fluid" alt="Welcome">
-          </div>
-          <div class="col">
-            <div class="card-title">
-              <div id="loginTitle" class="h2">Please Sign In</div>
-            </div>
-            <div class="card-body">
-              <form action="/userAuth" method="post" autocomplete="off">
-                <div class="m-3">
-                  <label for="user" class="form-label">User Name</label>
-                  <input type="text" name="user" id="loginUser" class="form-control" required>
-                </div>
-                <div class="m-3">
-                  <label for="password" class="form-label">Password</label>
-                  <input type="password" name="password" id="loginPassword" class="form-control" required>
-                </div>
-                <button type="button" class="btn btn-secondary m-1" data-bs-toggle="modal" data-bs-target="#createUser">Sign Up</button>
-                <button type="submit" id="loginSubmit" class="btn btn-primary m-1">Sign In</button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div> -->
 
     <!-- Modal -->
     <div class="modal fade" id="createUser" tabindex="-1" aria-labelledby="createUser" aria-hidden="true">

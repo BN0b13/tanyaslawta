@@ -1,54 +1,39 @@
 document.addEventListener('DOMContentLoaded', loadUp);
+const newPostNav = document.getElementById('newPostNav');
+const myPostsNav = document.getElementById('myPostsNav');
+const myCommentsNav = document.getElementById('myCommentsNav');
+const settingsNav = document.getElementById('settingsNav');
+const currentProfileView = document.getElementById('currentProfileView');
 const postTitle = document.getElementById('title');
 const postBody = document.getElementById('body');
 const modalBtnArea = document.getElementById('modalBtnArea');
-const profileContent = document.getElementById('profileContent');
 const editBtnArea = document.getElementById('editBtnArea');
+const closeModal = document.getElementById('closeModal');
 const logOutBtn = document.getElementById('logOutBtn');
 const deleteBtn = document.getElementsByClassName('deleteBtn');
+let curUser = '';
 
-// function profileControlls() {
-//   profileContent.addEventListener('click', (e) => {    
-//     const targ = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.id;
+const navArr = [['myPostsNav', true], ['myCommentsNav', false], ['settingsNav', false]];
 
-//       if(e.target.className == 'deleteBtn btn btn-danger btn-sm') {
-//         fetch(`/${targ}`, {
-//           method: 'DELETE'
-//         }).then(response=> response.json())
-//         .then(data => {
-//           return loadUp();
-//         });
-//       } else if(e.target.className == 'editBtn btn btn-secondary btn-sm') {
-//         const titleContent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[1].textContent;
-//         const bodyContent = e.target.parentElement.parentElement.parentElement.parentElement.parentElement.children[2].textContent;
-//         postTitle.value = titleContent;
-//         postBody.value = bodyContent;
-//         modalBtnArea.innerHTML = '<button type="button" id="postCancelBtn" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button><button type="button" id="submitEdit" class="btn btn-primary m-2" data-bs-dismiss="modal">Edit Post</button>';
-//         document.getElementById('postCancelBtn').addEventListener('click', () => {
-//           clearFields();
-//         })
-//         document.getElementById('submitEdit').addEventListener('click', function() {
-//           const title = postTitle.value;
-//           const body = postBody.value;
-//           const data = { title, body};
-  
-//           fetch(`/${targ}`, {
-//           method: 'PATCH',
-//           headers: {
-//             'Content-type': 'application/json'
-//           },
-//           body: JSON.stringify(data)
-          
-//         }).then(response=> response.json())
-//         .then(data => {
-//           return loadContent();
-//         })
-//         });
-//       } else { return }
+// Nav Event Listeners
+navListener = (nav) => {
+  for(i=0; i< navArr.length; i++) {
+    if(navArr[i][0] == `${nav}`) {
+      navArr[i][1] = true;
+      console.log('True hit' + navArr[i][1])
+    } else {
+      navArr[i][1] = false;
+      console.log('False Hit' + navArr[i][1])
+    }
+  }
+  // console.log(navArr);
+  navMenu();
+}
 
-//     e.preventDefault();
-//   });
-// }
+myPostsNav.addEventListener('click', () => { navListener(navArr[0][0]) });
+myCommentsNav.addEventListener('click', () => { navListener(navArr[1][0]) });
+settingsNav.addEventListener('click', () => { navListener(navArr[2][0]) });
+
 
 deletePost = (postidentification) => {
     fetch(`/${postidentification}`, {
@@ -56,7 +41,7 @@ deletePost = (postidentification) => {
   }).then(response=> response.json())
   .then(data => {
     console.log(data);
-    loadContent();
+    loadMyPosts();
   });
 }
 
@@ -86,26 +71,40 @@ submitEdit = (data) => {
       'body': postBody.value   
     })})
   .then((response) => response.json())
-  .then((data) => {console.log(data);});
-  loadContent();
+  .then((data) => loadMyPosts());
 }
 
-// .click((e) => {
-//   console.log('hit');
-//   console.log(e);
-// })
-
-function clearFields() {
+clearFields = () => {
   postTitle.value = '';
   postBody.value = '';
   modalBtnArea.innerHTML = `
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+    <button onClick="clearFields()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
     <button type="submit" id="submitBtn" class="btn btn-primary m-2">Submit</button>
   `;
 }
 
-function loadContent() {
-  const results = fetch('/profile/api')
+navMenu = () => {
+  navArr.forEach(nav => {
+    if(nav[1]) {
+      loadView(nav[0]);
+    }
+  })
+}
+
+loadView = (nav) => {
+    if(nav == 'myPostsNav') {
+      loadMyPosts();
+    }
+    if(nav == 'myCommentsNav') {
+      loadMyComments();
+    }
+    if(nav == 'settingsNav') {
+      return console.log('Settings Hit');
+    }
+}
+
+loadMyPosts = () => {
+  const results = fetch('/profile/posts/api')
   .then(response=> response.json())
   .then(data=> {
     let pageContent = '';
@@ -130,23 +129,53 @@ function loadContent() {
           </div>
         </div>
       `;
-      profileContent.innerHTML = pageContent;
+      currentProfileView.innerHTML = pageContent;
+      console.log(data);
     })
   })
   .catch(err=> console.log(err));
 }
 
-function loadUser() {
-  const results = fetch('/profile-user/api')
+loadMyComments = () => {
+  const postIDArr = window.location.pathname.split('/');
+  const postID = postIDArr[2];
+  const results = fetch(`/profile/comments/api`)
+  .then(response=> response.json())
+  .then(data=> {
+    let pageContent = '';
+    data.forEach((comment) => {
+        pageContent += `
+        <div class="container m-1">
+          <div class="card">
+            <div class="card-body" id="${comment._id}">
+              <div class="d-flex justify-content-between">
+                <div>${comment.user}</div>
+                <div>${new Date(comment.date).toDateString()}</div>
+              </div>
+            </div>
+              <p class="card-text">${comment.comment}</p>
+            </div>
+          </div>
+        </div>
+      `;
+    })
+    currentProfileView.innerHTML = pageContent;
+  })
+  .catch(err=> console.log(err));
+}
+
+loadUser = () => {
+  const results = fetch('/profile/user/api')
   .then(response=> response.json())
   .then(data=> {
     let output = '';
     data.forEach(user => {
-      output += `
-        <div>Welcome ${user.user}</div>
+      curUser = user._id;
+      output = `
+        <div class="h5 text-center p-1">Welcome ${user.user}</div>
       `
     })
-    document.getElementById('profileHead').innerHTML = output; 
+    document.getElementById('profileHead').innerHTML = output;
   })
   .catch(err=> console.log(err));  
 }
@@ -154,19 +183,5 @@ function loadUser() {
 function loadUp() {
   clearFields()
   loadUser();
-  loadContent();
-  // profileControlls();
+  navMenu();
 }
-
-// function testRes() {
-//   fetch('/test')
-//   .then(response=> response.json())
-//   .then(data=> {
-//     console.log(data);
-//     // let output = '';
-//     // data.forEach(res => {
-//     //   output += `
-//     //     <div>${res}</div>
-//     //   `
-//     })
-// }
