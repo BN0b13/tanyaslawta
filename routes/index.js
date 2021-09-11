@@ -258,6 +258,7 @@ router.post('/test/login', async (req, res) => {
 
 router.delete('/delete-post/:postId', async (req, res) => {
   try {
+    const removedComments = await Comment.deleteMany({postID: req.params.postId });
     const removedPost = await Post.deleteOne({_id: req.params.postId });
     res.json(removedPost);
   } catch(err) {

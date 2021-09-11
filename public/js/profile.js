@@ -110,7 +110,7 @@ loadMyComments = () => {
                 <div class="dropdown">
                   <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"></button>
                   <ul class="dropdown-menu text-center profileManageDropDown" aria-labelledby="dropdownMenuButton1">
-                    <a href="/content/${comment._id}" class="h6"><li class="bottomBorder py-2">Go To Post</li></a>
+                    <a href="/content/${comment.postID}" class="h6"><li class="bottomBorder py-2">Go To Post</li></a>
                     <a onClick="editComment('${comment._id}')" class="h6" data-bs-toggle="modal" data-bs-target="#newBlogPost"><li class="bottomBorder py-2">Edit Comment</li></a>
                     <a onClick="deleteCommentConfirm('${comment._id}')" class="h6" data-bs-toggle="modal" data-bs-target="#newBlogPost"><li class="py-2">Delete Comment</li></a>
                   </ul>
@@ -149,11 +149,15 @@ loadUser = () => {
 deleteConfirm = (post) => {
   modalTitle.innerHTML = 'Delete Post';
   myForm.style.display = 'none';
-  modalMsg.innerHTML = `<p>Are you sure you want to delete your post?</p>`;
-  modalBtnArea.innerHTML = `
+  modalMsg.innerHTML = `<p>Are you sure you want to delete your post?</p>
+  <div id="modalBtnArea" class="d-flex justify-content-center">
     <button onClick="clearFields()" type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">Cancel</button>
     <button onClick="deletePost('${post}')" type="button" class="btn btn-danger m-2" data-bs-dismiss="modal">Delete Post</button>
-  `;
+  </div>`;
+  // modalBtnArea.innerHTML = `
+  //   <button onClick="clearFields()" type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">Cancel</button>
+  //   <button onClick="deletePost('${post}')" type="button" class="btn btn-danger m-2" data-bs-dismiss="modal">Delete Post</button>
+  // `;
 }
 
 deletePost = (postidentification) => {
@@ -255,6 +259,7 @@ fetch(`/edit-comment/${data}`, {
 
 clearFields = () => {
   modalTitle.innerHTML = 'New Post';
+  modalMsg.innerHTML = '';
   modalPostTitleDiv.style.display = 'block';
   myForm.style.display = 'block';
   postTitle.value = '';
