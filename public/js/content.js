@@ -34,11 +34,11 @@ function loadContent() {
 function loadComments() {
   const postIDArr = window.location.pathname.split('/');
   const postID = postIDArr[2];
-  const results = fetch(`/comments/${postID}`)
+  const results = fetch(`/post-comments/${postID}`)
   .then(response=> response.json())
   .then(data=> {
     let pageContent = '';
-    data.forEach((comment) => {
+    data.reverse().forEach((comment) => {
         pageContent += `
         <div class="container m-1">
           <div class="card">

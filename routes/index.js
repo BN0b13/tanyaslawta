@@ -104,7 +104,7 @@ router.get('/posts/:postId', (req, res) => {
   });
 });
 
-router.get('/comments/:postId', (req, res) => {
+router.get('/post-comments/:postId', (req, res) => {
   Comment.find( { postID: req.params.postId } )
   .then(result=> {
     res.send(result);
@@ -114,8 +114,8 @@ router.get('/comments/:postId', (req, res) => {
   });
 });
 
-router.get('/comments/:userId', (req, res) => {
-  Comment.find( { userID: req.params.userId } )
+router.get('/profile/comment/:commentId', (req, res) => {
+  Comment.find( { _id: req.params.commentId } )
   .then(result=> {
     res.send(result);
   })
@@ -256,7 +256,7 @@ router.post('/test/login', async (req, res) => {
 //   res.redirect(`/`);
 // })
 
-router.delete('/:postId', async (req, res) => {
+router.delete('/delete-post/:postId', async (req, res) => {
   try {
     const removedPost = await Post.deleteOne({_id: req.params.postId });
     res.json(removedPost);
@@ -265,10 +265,28 @@ router.delete('/:postId', async (req, res) => {
   }
 });
 
-router.patch('/:postId', express.json(), async (req, res) => {
+router.patch('/edit-post/:postId', express.json(), async (req, res) => {
   try {
     const updatedPost = await Post.updateOne({_id: req.params.postId }, { $set: {title: req.body.title, body: req.body.body}});
     res.json(updatedPost);
+  } catch(err) {
+    res.json( { message: err });
+  }
+});
+
+router.delete('/delete-comment/:commentId', async (req, res) => {
+  try {
+    const removedComment = await Comment.deleteOne({_id: req.params.commentId });
+    res.json(removedComment);
+  } catch(err) {
+    res.json( { message: err });
+  }
+});
+
+router.patch('/edit-comment/:commentId', express.json(), async (req, res) => {
+  try {
+    const updatedComment = await Comment.updateOne({_id: req.params.commentId }, { $set: {comment: req.body.comment}});
+    res.json(updatedComment);
   } catch(err) {
     res.json( { message: err });
   }

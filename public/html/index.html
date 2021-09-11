@@ -34,10 +34,10 @@
     <div class="d-flex">
       <ul class="nav flex-column">
         <li class="nav-item">
-          <div id="profileHead"></div>
-        </li>
-        <li class="nav-item">
-          <h6 id="newPostNav" class="nav-link profileNav" data-bs-toggle="modal" data-bs-target="#newBlogPost">New Post</h6>
+          <div id="profileNavHeader" class="container my-2">
+            <div id="profileHead"></div>
+            <button id="newPostNav" class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#newBlogPost">New Post</button>
+          </div>
         </li>
         <li class="nav-item">
           <h6 id="myPostsNav" class="nav-link profileNav">My Posts</h6>
@@ -55,8 +55,6 @@
           <div class="row">
             <div class="col">
               <div id="currentProfileView"></div>
-              <!-- Delete when current view is made -->
-              <div id="userPosts"></div>
             </div>
           </div>
         </div>
@@ -65,62 +63,29 @@
 
   </section>
 
-  <!-- modal -->
+  <!-- Modal -->
   <div class="modal fade" id="newBlogPost" tabindex="-1" aria-labelledby="newPostModal" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="newPostModal">New Post</h5>
+          <h5 class="modal-title" id="modalTitle"></h5>
           <button onClick="clearFields()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-        <div class="modal-body">
+        <div id="modalBody" class="modal-body">
+          <div id="modalMsg"></div>
           <form action="/new-post" id="myForm" method="post">
-            <label for="title" class="form-label">Title</label><br>
+            <div id="modalPostTitleDiv">
+              <label for="title" class="form-label">Title</label><br>
             <input type="text" id="title" class="form-control" name="title" autocomplete="off" autocapitalize="on" required><br>
-            <label for="body" class="form-label">Body</label><br>
+            </div>
+            <label id="newPostBodyLabel" for="body" class="form-label">Body</label><br>
             <textarea id="body" class="form-control" name="body" cols="30" rows="10" required></textarea><br>
-            <div id="modalBtnArea"></div>
           </form>
+          <div id="modalBtnArea" class="d-flex justify-content-center"></div>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- <section>
-    <div class="container text-center">
-      <div class="row">
-        <div id="profileNav" class="col">
-          <div id="profileHead"></div>
-          <div class="container"> -->
-            <!-- modal -->
-            <!-- <button class="btn btn-primary btn-sm m-3" data-bs-toggle="modal" data-bs-target="#newBlogPost">New Blog Post</button>
-            <div class="modal fade" id="newBlogPost" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">New Post</h5>
-                    <button onClick="clearFields()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <form action="/new-post" id="myForm" method="post">
-                      <label for="title" class="form-label">Title</label><br>
-                      <input type="text" id="title" class="form-control" name="title" autocomplete="off" autocapitalize="on" required><br>
-                      <label for="body" class="form-label">Body</label><br>
-                      <textarea id="body" class="form-control" name="body" cols="30" rows="10" required></textarea><br>
-                      <div id="modalBtnArea"></div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div id="profileContent"></div>
-        </div>
-      </div>
-    </div>
-  </section> -->
 
   <section class="text-center">
     <footer class="m-3 p-3">
@@ -128,6 +93,7 @@
     </footer>
   </section>
 
+  <script src="https://kit.fontawesome.com/7b6c8de7a7.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <script src="../js/profile.js"></script>
 </body>

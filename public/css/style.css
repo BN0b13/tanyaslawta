@@ -13,3 +13,22 @@
 #loginContainer {
   max-width: 950px !important;
 }
+
+.bottomBorder{
+  border-bottom: 1px solid #000 !important;
+}
+
+.profileManageDropDown {
+  padding: 0 !important;
+}
+
+.profileManageDropDown a{
+  text-decoration: none;
+  color: #000;
+}
+
+.profileManageDropDown a li:hover {
+  cursor: pointer;
+  background-color: #333;
+  color: #fff;
+}
