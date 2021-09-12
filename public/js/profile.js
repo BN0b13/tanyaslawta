@@ -56,7 +56,7 @@ loadView = (nav) => {
       loadMyComments();
     }
     if(nav == settingsNav) {
-      console.log('MAKE THE SETTINGS PAGE ALREADY, JEEZ!');
+      loadSettings();
     }
 }
 
@@ -144,20 +144,25 @@ loadUser = () => {
   .catch(err=> console.log(err));  
 }
 
+loadSettings = () => {
+  currentProfileView.innerHTML = `
+    <h1>Settings</h1>
+    <p>Features To Arrive Soon</p>
+  `;
+}
+
 // Post Utilities
 
 deleteConfirm = (post) => {
   modalTitle.innerHTML = 'Delete Post';
   myForm.style.display = 'none';
-  modalMsg.innerHTML = `<p>Are you sure you want to delete your post?</p>
+  modalMsg.innerHTML = `
+  <p>Are you sure you want to delete your post?</p>
   <div id="modalBtnArea" class="d-flex justify-content-center">
     <button onClick="clearFields()" type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">Cancel</button>
     <button onClick="deletePost('${post}')" type="button" class="btn btn-danger m-2" data-bs-dismiss="modal">Delete Post</button>
-  </div>`;
-  // modalBtnArea.innerHTML = `
-  //   <button onClick="clearFields()" type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">Cancel</button>
-  //   <button onClick="deletePost('${post}')" type="button" class="btn btn-danger m-2" data-bs-dismiss="modal">Delete Post</button>
-  // `;
+  </div>
+  `;
 }
 
 deletePost = (postidentification) => {
@@ -208,10 +213,12 @@ fetch(`/edit-post/${data}`, {
 deleteCommentConfirm = (comment) => {
   modalTitle.innerHTML = 'Delete Comment';
   myForm.style.display = 'none';
-  modalMsg.innerHTML = `<p>Are you sure you want to delete your comment?</p>`;
-  modalBtnArea.innerHTML = `
+  modalMsg.innerHTML = `
+  <p>Are you sure you want to delete your comment?</p>
+  <div id="modalBtnArea" class="d-flex justify-content-center">
     <button onClick="clearFields()" type="button" class="btn btn-secondary m-2" data-bs-dismiss="modal">Cancel</button>
     <button onClick="deleteComments('${comment}')" type="button" class="btn btn-danger m-2" data-bs-dismiss="modal">Delete Comment</button>
+  </div>
   `;
 }
 

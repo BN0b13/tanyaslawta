@@ -13,6 +13,10 @@
 #loginContainer {
   max-width: 950px !important;
 }
+#currentProfileView {
+  min-height: 80vh;
+}
+
 
 .bottomBorder{
   border-bottom: 1px solid #000 !important;

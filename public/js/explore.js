@@ -15,10 +15,12 @@ function loadAllPosts() {
           <div class="container m-2 p-2">
             <div class="card">
               <div class="card-body">
+                <div class="d-flex justify-content-between">
+                  <div class="d-flex justify-content-center">${post.user}</div>
+                  <p class="card-text">${new Date(post.date).toDateString()}</p>
+                </div>
                 <h2 class="card-title">${post.title}</h2>
                 <div>
-                  <div class="d-flex justify-content-center">${post.user}</div>
-                  <div class="d-flex justify-content-center">${new Date(post.date).toDateString()}</div>
                 </div>
                 <a id="${post._id}" class="btn btn-primary" href="/content/${post._id}" role="button">Read Post</a>
               </div>
